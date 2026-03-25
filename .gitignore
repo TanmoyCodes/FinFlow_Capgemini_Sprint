@@ -1,0 +1,17 @@
+/.metadata/
+# Eclipse
+.metadata/
+*.log
+
+# OS files
+.DS_Store
+
+# Build
+target/
+
+# Uploads (VERY IMPORTANT)
+doc-verification/uploads/
+
+# IDE
+*.class
+*.jar

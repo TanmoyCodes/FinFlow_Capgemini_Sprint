@@ -1,6 +1,7 @@
 package com.example.demo.dto;
 
 public class AuthResponse {
+
     private String token;
     private String role;
 
@@ -9,14 +10,11 @@ public class AuthResponse {
         this.role = role;
     }
 
-	public String getToken() {
-		return token;
-	}
+    public String getToken() {
+        return token;
+    }
 
-	public String getRole() {
-		return role;
-	}
-
-    // getters
-    
+    public String getRole() {
+        return role;
+    }
 }
