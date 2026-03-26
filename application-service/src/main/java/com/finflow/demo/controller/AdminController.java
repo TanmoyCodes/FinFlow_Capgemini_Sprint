@@ -3,6 +3,7 @@ package com.finflow.demo.controller;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import com.finflow.demo.dto.AdminStatsDTO;
 import com.finflow.demo.entity.LoanApplication;
 import com.finflow.demo.service.ApplicationService;
 
@@ -53,5 +54,10 @@ public class AdminController {
         System.out.println("❌ ADMIN REJECT: " + id);
 
         return service.reject(id);
+    }
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/stats")
+    public AdminStatsDTO getStats() {
+        return service.getAdminStats();
     }
 }

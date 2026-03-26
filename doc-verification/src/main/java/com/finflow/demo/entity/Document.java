@@ -8,7 +8,7 @@ public class Document {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true)
+    @Column(name = "user_email", unique = true)
     private String userId;
 
     private String filePath;

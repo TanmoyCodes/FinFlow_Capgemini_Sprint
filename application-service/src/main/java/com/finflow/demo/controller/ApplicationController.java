@@ -1,9 +1,11 @@
 package com.finflow.demo.controller;
 
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import com.finflow.demo.dto.AdminStatsDTO;
 import com.finflow.demo.dto.ApplicationRequest;
 import com.finflow.demo.entity.LoanApplication;
 import com.finflow.demo.service.ApplicationService;
@@ -89,4 +91,10 @@ public class ApplicationController {
 
         return service.getApplicationForUser(id, userId);
     }
+    
+    @PutMapping("/refresh/{id}")
+    public LoanApplication refreshApplication(@PathVariable Long id) {
+        return service.refreshStatus(id);
+    }
+    
 }

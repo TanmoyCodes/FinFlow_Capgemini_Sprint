@@ -8,6 +8,7 @@ import com.finflow.demo.enums.DocumentStatus;
 import com.finflow.demo.repository.DocumentRepository;
 
 import java.io.File;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -98,7 +99,43 @@ public class DocumentService {
         }
 
         return repository.findByUserId(userId)
-                .map(doc -> "UPLOADED")
+                .map(doc -> doc.getStatus().name())
                 .orElse("NOT_UPLOADED");
+    }
+    
+    public List<Document> getAllDocuments() {
+        return repository.findAll();
+    }
+    
+    public String verifyDocument(String userId) {
+
+        Optional<Document> docOpt = repository.findByUserId(userId);
+
+        if (docOpt.isEmpty()) {
+            return "DOCUMENT_NOT_FOUND";
+        }
+
+        Document doc = docOpt.get();
+        doc.setStatus(DocumentStatus.VERIFIED);
+
+        repository.save(doc);
+
+        return "DOCUMENT_VERIFIED";
+    }
+    
+    public String rejectDocument(String userId) {
+
+        Optional<Document> docOpt = repository.findByUserId(userId);
+
+        if (docOpt.isEmpty()) {
+            return "DOCUMENT_NOT_FOUND";
+        }
+
+        Document doc = docOpt.get();
+        doc.setStatus(DocumentStatus.REJECTED);
+
+        repository.save(doc);
+
+        return "DOCUMENT_REJECTED";
     }
 }
