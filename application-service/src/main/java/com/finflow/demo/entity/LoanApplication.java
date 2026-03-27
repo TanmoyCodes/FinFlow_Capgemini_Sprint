@@ -2,13 +2,14 @@ package com.finflow.demo.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-
+import java.io.Serializable; 
 
 
 @Entity
 @Table(name = "loan_applications")
-public class LoanApplication {
+public class LoanApplication implements Serializable { // ✅ FIXED
 
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

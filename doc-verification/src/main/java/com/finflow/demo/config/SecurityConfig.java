@@ -23,8 +23,25 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .anyRequest().permitAll()
-            )
+            	    .requestMatchers(
+            	        "/error",
+            	        "/swagger-ui/**",
+            	        "/v3/api-docs/**",
+            	        "/swagger-resources/**",
+            	        "/webjars/**"
+            	    ).permitAll()
+
+            	    // ALSO allow gateway-based swagger path
+            	    .requestMatchers("/application/v3/api-docs").permitAll()
+
+            	    // ADMIN ONLY
+            	    .requestMatchers("/application/admin/**").hasRole("ADMIN")
+
+            	    // USER + ADMIN
+            	    .requestMatchers("/application/**").hasAnyRole("USER", "ADMIN")
+
+            	    .anyRequest().authenticated()
+            	)
             .addFilterBefore(gatewayFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

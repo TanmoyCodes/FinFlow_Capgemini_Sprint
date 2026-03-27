@@ -5,7 +5,7 @@ import jakarta.servlet.http.*;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,7 +18,8 @@ public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
 
-    private static final String GATEWAY_SECRET = "my-secret-key";
+    @Value("${gateway.secret}")
+    private String gatewaySecret;
 
     public JwtFilter(JwtUtil jwtUtil) {
         this.jwtUtil = jwtUtil;
@@ -35,15 +36,21 @@ public class JwtFilter extends OncePerRequestFilter {
         System.out.println("➡️ Incoming Request: " + path);
 
         // ✅ Skip auth endpoints
-        if (path.startsWith("/auth")) {
-            filterChain.doFilter(request, response);
-            return;
-        }
+        if (path.startsWith("/auth") ||
+        	    path.startsWith("/application/v3/api-docs") ||
+        	    path.contains("/v3/api-docs") ||
+        	    path.contains("/swagger-ui") ||
+        	    path.contains("/swagger-resources") ||
+        	    path.contains("/webjars")) {
 
+        	    System.out.println("✅ Swagger/Auth bypass: " + path);
+        	    filterChain.doFilter(request, response);
+        	    return;
+        	}
         // 🔐 Gateway check
         String secret = request.getHeader("X-Gateway-Secret");
 
-        if (!GATEWAY_SECRET.equals(secret)) {
+        if (secret == null || !gatewaySecret.equals(secret)) {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             response.getWriter().write("Access Denied: Only Gateway allowed");
             return;

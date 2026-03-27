@@ -24,15 +24,25 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-            		.requestMatchers("/error").permitAll()
-                // ADMIN ONLY
-                .requestMatchers("/application/admin/**").hasRole("ADMIN")
 
-                // USER + ADMIN
-                .requestMatchers("/application/**").hasAnyRole("USER", "ADMIN")
+            	    // ✅ Swagger FIRST
+            	    .requestMatchers(
+            	        "/error",
+            	        "/swagger-ui/**",
+            	        "/v3/api-docs/**",
+            	        "/application/v3/api-docs/**",
+            	        "/swagger-resources/**",
+            	        "/webjars/**"
+            	    ).permitAll()
 
-                .anyRequest().authenticated()
-            )
+            	    // ADMIN ONLY
+            	    .requestMatchers("/application/admin/**").hasRole("ADMIN")
+
+            	    // USER + ADMIN
+            	    .requestMatchers("/application/**").hasAnyRole("USER", "ADMIN")
+
+            	    .anyRequest().authenticated()
+            	)
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();

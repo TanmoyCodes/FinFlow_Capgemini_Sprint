@@ -24,16 +24,26 @@ public class GatewayValidationFilter extends OncePerRequestFilter {
 
         String uri = request.getRequestURI();
 
+        String forwardedPrefix = request.getHeader("X-Forwarded-Prefix");
+        System.out.println("🔁 Forwarded Prefix: " + forwardedPrefix);
         System.out.println("📌 Incoming Request URI: " + uri);
 
         // =========================
-        // ✅ BYPASS FOR FILE UPLOAD
+        // ✅ BYPASS FOR SWAGGER + UPLOAD
         // =========================
-        if (uri.contains("/documents/upload")) {
-            System.out.println("✅ Skipping Gateway Validation for Upload");
-            filterChain.doFilter(request, response);
-            return;
-        }
+     // =========================
+     // ✅ BYPASS FOR SWAGGER + UPLOAD
+     // =========================
+     if (uri.contains("/v3/api-docs") ||
+         uri.contains("/swagger-ui") ||
+         uri.contains("/swagger-resources") ||
+         uri.contains("/webjars")) {
+
+         System.out.println("✅ Skipping Gateway Validation for Swagger/Upload");
+         filterChain.doFilter(request, response);
+         return;
+         
+     }
 
         // =========================
         // 🔍 DEBUG HEADERS

@@ -6,6 +6,7 @@ import com.finflow.demo.entity.ApplicationStatus;
 import com.finflow.demo.entity.LoanApplication;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ApplicationRepository extends JpaRepository<LoanApplication, Long> {
 
@@ -14,4 +15,5 @@ public interface ApplicationRepository extends JpaRepository<LoanApplication, Lo
     long countByStatus(ApplicationStatus status);
     long count();
     
+    Optional<LoanApplication> findTopByUserIdOrderByIdDesc(String userId);
 }

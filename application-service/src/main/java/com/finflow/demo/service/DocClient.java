@@ -16,11 +16,7 @@ public class DocClient {
     public String getDocStatus(String userId, String token) {
 
         HttpHeaders headers = new HttpHeaders();
-
-        // 🔥 REQUIRED (fixes your 403)
         headers.set("X-Gateway-Secret", "my-secret-key");
-
-        // ✅ Forward JWT (good practice)
         headers.set("Authorization", "Bearer " + token);
 
         HttpEntity<?> entity = new HttpEntity<>(headers);
