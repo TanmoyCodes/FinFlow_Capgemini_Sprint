@@ -1,0 +1,141 @@
+[INFO] Scanning for projects...
+[WARNING] The artifact org.codehaus.mojo:sonar-maven-plugin:jar:4.0.0.4121 has been relocated to org.sonarsource.scanner.maven:sonar-maven-plugin:jar:4.0.0.4121: SonarQube plugin was moved to SonarSource organisation
+[INFO] 
+[INFO] ----------------------< com.finflow:auth-service >----------------------
+[INFO] Building auth-service 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.3.2:clean (default-clean) @ auth-service ---
+[INFO] Deleting D:\FinFlow\FinFlow\auth-service\target
+[INFO] 
+[INFO] --- jacoco:0.8.12:prepare-agent (default) @ auth-service ---
+[INFO] argLine set to -javaagent:C:\\Users\\Lenovo\\.m2\\repository\\org\\jacoco\\org.jacoco.agent\\0.8.12\\org.jacoco.agent-0.8.12-runtime.jar=destfile=D:\\FinFlow\\FinFlow\\auth-service\\target\\jacoco.exec
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ auth-service ---
+[INFO] Copying 1 resource from src\main\resources to target\classes
+[INFO] Copying 0 resource from src\main\resources to target\classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ auth-service ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 17 source files with javac [debug release 17] to target\classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ auth-service ---
+[INFO] skip non existing resourceDirectory D:\FinFlow\FinFlow\auth-service\src\test\resources
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ auth-service ---
+[INFO] Changes detected - recompiling the module! :dependency
+[INFO] Compiling 2 source files with javac [debug release 17] to target\test-classes
+[INFO] 
+[INFO] --- surefire:3.1.2:test (default-test) @ auth-service ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.example.demo.AuthServiceApplicationTests
+16:43:44.107 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.example.demo.AuthServiceApplicationTests]: AuthServiceApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+16:43:44.547 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.example.demo.AuthServiceApplication for test class com.example.demo.AuthServiceApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.5)
+
+2026-03-28T16:43:45.972+05:30  INFO 24108 --- [auth-service] [           main] c.e.demo.AuthServiceApplicationTests     : Starting AuthServiceApplicationTests using Java 17.0.12 with PID 24108 (started by Tanmoy_Lenovo in D:\FinFlow\FinFlow\auth-service)
+2026-03-28T16:43:45.975+05:30 DEBUG 24108 --- [auth-service] [           main] c.e.demo.AuthServiceApplicationTests     : Running with Spring Boot v3.2.5, Spring v6.1.6
+2026-03-28T16:43:45.976+05:30  INFO 24108 --- [auth-service] [           main] c.e.demo.AuthServiceApplicationTests     : No active profile set, falling back to 1 default profile: "default"
+2026-03-28T16:43:48.595+05:30  INFO 24108 --- [auth-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-03-28T16:43:48.900+05:30  INFO 24108 --- [auth-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 284 ms. Found 1 JPA repository interface.
+2026-03-28T16:43:49.525+05:30  INFO 24108 --- [auth-service] [           main] o.s.cloud.context.scope.GenericScope     : BeanFactory id=281eae67-25c4-35d9-bcef-4d82281826df
+2026-03-28T16:43:49.950+05:30  WARN 24108 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig' of type [org.springframework.cloud.client.loadbalancer.LoadBalancerAutoConfiguration$DeferringLoadBalancerInterceptorConfig] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). The currently created BeanPostProcessor [lbRestClientPostProcessor] is declared through a non-static factory method on that class; consider declaring it as static instead.
+2026-03-28T16:43:49.958+05:30  WARN 24108 --- [auth-service] [           main] trationDelegate$BeanPostProcessorChecker : Bean 'deferringLoadBalancerInterceptor' of type [org.springframework.cloud.client.loadbalancer.DeferringLoadBalancerInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying). Is this bean getting eagerly injected into a currently created BeanPostProcessor [lbRestClientPostProcessor]? Check the corresponding BeanPostProcessor declaration and its dependencies.
+2026-03-28T16:43:50.359+05:30  INFO 24108 --- [auth-service] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-03-28T16:43:50.494+05:30  INFO 24108 --- [auth-service] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-03-28T16:43:50.589+05:30  INFO 24108 --- [auth-service] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-03-28T16:43:51.246+05:30  INFO 24108 --- [auth-service] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-03-28T16:43:51.307+05:30  INFO 24108 --- [auth-service] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-03-28T16:43:52.066+05:30  INFO 24108 --- [auth-service] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4358e209
+2026-03-28T16:43:52.075+05:30  INFO 24108 --- [auth-service] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-03-28T16:43:54.097+05:30  INFO 24108 --- [auth-service] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-03-28T16:43:54.179+05:30  INFO 24108 --- [auth-service] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-03-28T16:43:55.026+05:30  WARN 24108 --- [auth-service] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-03-28T16:43:55.139+05:30  WARN 24108 --- [auth-service] [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 1947dff0-b63b-4599-9696-3143eab504fc
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-03-28T16:43:55.692+05:30  INFO 24108 --- [auth-service] [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@1573b1dc, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5dafcdc7, org.springframework.security.web.context.SecurityContextHolderFilter@6d7a772e, org.springframework.security.web.header.HeaderWriterFilter@151f21a4, org.springframework.web.filter.CorsFilter@1c8f1c73, org.springframework.security.web.authentication.logout.LogoutFilter@3609c23c, com.example.demo.security.JwtFilter@463f7e2f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1dfda1c4, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@e5a570, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5f02432e, org.springframework.security.web.access.ExceptionTranslationFilter@7c80bcd9, org.springframework.security.web.access.intercept.AuthorizationFilter@5c8292df]
+2026-03-28T16:43:56.999+05:30  INFO 24108 --- [auth-service] [           main] DiscoveryClientOptionalArgsConfiguration : Eureka HTTP Client uses RestTemplate.
+2026-03-28T16:43:57.055+05:30  WARN 24108 --- [auth-service] [           main] iguration$LoadBalancerCaffeineWarnLogger : Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-03-28T16:43:57.094+05:30  INFO 24108 --- [auth-service] [           main] o.s.c.n.eureka.InstanceInfoFactory       : Setting initial instance status as: STARTING
+2026-03-28T16:43:57.315+05:30  INFO 24108 --- [auth-service] [           main] com.netflix.discovery.DiscoveryClient    : Initializing Eureka in region us-east-1
+2026-03-28T16:43:57.325+05:30  INFO 24108 --- [auth-service] [           main] c.n.d.s.r.aws.ConfigClusterResolver      : Resolving eureka endpoints via configuration
+2026-03-28T16:43:57.378+05:30  INFO 24108 --- [auth-service] [           main] com.netflix.discovery.DiscoveryClient    : Disable delta property : false
+2026-03-28T16:43:57.379+05:30  INFO 24108 --- [auth-service] [           main] com.netflix.discovery.DiscoveryClient    : Single vip registry refresh property : null
+2026-03-28T16:43:57.379+05:30  INFO 24108 --- [auth-service] [           main] com.netflix.discovery.DiscoveryClient    : Force full registry fetch : false
+2026-03-28T16:43:57.379+05:30  INFO 24108 --- [auth-service] [           main] com.netflix.discovery.DiscoveryClient    : Application is null : false
+2026-03-28T16:43:57.379+05:30  INFO 24108 --- [auth-service] [           main] com.netflix.discovery.DiscoveryClient    : Registered Applications size is zero : true
+2026-03-28T16:43:57.379+05:30  INFO 24108 --- [auth-service] [           main] com.netflix.discovery.DiscoveryClient    : Application version is -1: true
+2026-03-28T16:43:57.379+05:30  INFO 24108 --- [auth-service] [           main] com.netflix.discovery.DiscoveryClient    : Getting all instance registry info from the eureka server
+2026-03-28T16:43:57.822+05:30  INFO 24108 --- [auth-service] [           main] com.netflix.discovery.DiscoveryClient    : The response status is 200
+2026-03-28T16:43:57.827+05:30  INFO 24108 --- [auth-service] [           main] com.netflix.discovery.DiscoveryClient    : Starting heartbeat executor: renew interval is: 30
+2026-03-28T16:43:57.831+05:30  INFO 24108 --- [auth-service] [           main] c.n.discovery.InstanceInfoReplicator     : InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-03-28T16:43:57.841+05:30  INFO 24108 --- [auth-service] [           main] com.netflix.discovery.DiscoveryClient    : Discovery Client initialized at timestamp 1774696437839 with initial instances count: 4
+2026-03-28T16:43:57.848+05:30  INFO 24108 --- [auth-service] [           main] o.s.c.n.e.s.EurekaServiceRegistry        : Registering application AUTH-SERVICE with eureka with status UP
+2026-03-28T16:43:57.849+05:30  INFO 24108 --- [auth-service] [           main] com.netflix.discovery.DiscoveryClient    : Saw local status change event StatusChangeEvent [timestamp=1774696437849, current=UP, previous=STARTING]
+2026-03-28T16:43:57.854+05:30  INFO 24108 --- [auth-service] [nfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH-SERVICE/172.21.232.254:auth-service:8080: registering service...
+2026-03-28T16:43:57.872+05:30  INFO 24108 --- [auth-service] [           main] c.e.demo.AuthServiceApplicationTests     : Started AuthServiceApplicationTests in 12.826 seconds (process running for 15.486)
+2026-03-28T16:43:57.953+05:30  INFO 24108 --- [auth-service] [nfoReplicator-0] com.netflix.discovery.DiscoveryClient    : DiscoveryClient_AUTH-SERVICE/172.21.232.254:auth-service:8080 - registration status: 204
+Java HotSpot(TM) 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 14.96 s -- in com.example.demo.AuthServiceApplicationTests
+[INFO] Running com.example.demo.service.AuthServiceTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.830 s -- in com.example.demo.service.AuthServiceTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- jacoco:0.8.12:report (report) @ auth-service ---
+[INFO] Loading execution data file D:\FinFlow\FinFlow\auth-service\target\jacoco.exec
+[INFO] Analyzed bundle 'auth-service' with 16 classes
+[INFO] 
+[INFO] --- jar:3.3.0:jar (default-jar) @ auth-service ---
+[INFO] Building jar: D:\FinFlow\FinFlow\auth-service\target\auth-service-0.0.1-SNAPSHOT.jar
+[INFO] 
+[INFO] --- spring-boot:3.2.5:repackage (repackage) @ auth-service ---
+[INFO] Replacing main artifact D:\FinFlow\FinFlow\auth-service\target\auth-service-0.0.1-SNAPSHOT.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[INFO] The original artifact has been renamed to D:\FinFlow\FinFlow\auth-service\target\auth-service-0.0.1-SNAPSHOT.jar.original
+[INFO] 
+[INFO] ----------------------< com.finflow:auth-service >----------------------
+[INFO] Building auth-service 0.0.1-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- sonar:4.0.0.4121:sonar (default-cli) @ auth-service ---
+[WARNING] 16:44:06.045 Using an unspecified version instead of an explicit plugin version may introduce breaking analysis changes at an unwanted time. It is highly recommended to use an explicit version, e.g. 'org.sonarsource.scanner.maven:sonar-maven-plugin:4.0.0.4121'.
+[INFO] 16:44:06.055 Java 17.0.12 Oracle Corporation (64-bit)
+[INFO] 16:44:06.055 Windows 11 10.0 (amd64)
+[INFO] 16:44:06.264 User cache: C:\Users\Lenovo\.sonar\cache
+[INFO] 16:44:06.364 Communicating with SonarQube Server 9.9.8.100196
+[WARNING] Plugin is modifying testCompileSourceRoots through iterator.remove(), which will not work in Maven 4.0.0. Use MavenProject.addTestCompileSourceRoot()/removeTestCompileSourceRoot() methods instead. If using a plugin, please upgrade to the latest version or report the issue to the plugin maintainer. To disable these warnings, set -Dmaven.project.sourceRoots.warningsDisabled=true on the command line, in the .mvn/maven.config file, or in project POM properties.
+[INFO] 16:44:06.403 Default locale: "en_IN", source code encoding: "UTF-8"
+[INFO] 16:44:07.412 Load global settings
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  33.096 s
+[INFO] Finished at: 2026-03-28T16:44:07+05:30
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.sonarsource.scanner.maven:sonar-maven-plugin:4.0.0.4121:sonar (default-cli) on project auth-service: Not authorized. Please check the properties sonar.login and sonar.password. -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException

@@ -16,3 +16,6 @@ doc-verification/uploads/
 # IDE
 *.class
 *.jar
+
+# Environment (never commit actual .env with secrets)
+.env

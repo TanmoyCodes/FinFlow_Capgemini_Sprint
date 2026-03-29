@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.crypto.SecretKey;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
@@ -14,11 +15,11 @@ import io.jsonwebtoken.security.Keys;
 @Component
 public class JwtUtil {
 
-    // 🔥 MUST MATCH GATEWAY EXACTLY
-    private final String SECRET = "mysecretkeymysecretkeymysecretkey";
+    @Value("${jwt.secret}")
+    private String secret;
 
     private SecretKey getKey() {
-        return Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
+        return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 
     // ✅ GENERATE TOKEN

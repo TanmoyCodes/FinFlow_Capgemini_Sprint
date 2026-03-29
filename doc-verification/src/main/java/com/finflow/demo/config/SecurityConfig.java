@@ -27,6 +27,7 @@ public class SecurityConfig {
             	        "/error",
             	        "/swagger-ui/**",
             	        "/v3/api-docs/**",
+            	        "/documents/v3/api-docs/**",
             	        "/swagger-resources/**",
             	        "/webjars/**"
             	    ).permitAll()
@@ -34,12 +35,7 @@ public class SecurityConfig {
             	    // ALSO allow gateway-based swagger path
             	    .requestMatchers("/application/v3/api-docs").permitAll()
 
-            	    // ADMIN ONLY
-            	    .requestMatchers("/application/admin/**").hasRole("ADMIN")
-
-            	    // USER + ADMIN
-            	    .requestMatchers("/application/**").hasAnyRole("USER", "ADMIN")
-
+            	    .requestMatchers("/documents/**").permitAll()
             	    .anyRequest().authenticated()
             	)
             .addFilterBefore(gatewayFilter, UsernamePasswordAuthenticationFilter.class);

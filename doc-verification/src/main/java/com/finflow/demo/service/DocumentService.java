@@ -10,6 +10,9 @@ import com.finflow.demo.repository.DocumentRepository;
 import java.io.File;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.stereotype.Service;
 
 @Service
 public class DocumentService {
@@ -20,6 +23,7 @@ public class DocumentService {
         this.repository = repository;
     }
 
+    @CacheEvict(value = "docStatus", key = "#userId")
     public void upload(MultipartFile file, String userId) {
 
         try {
@@ -90,6 +94,7 @@ public class DocumentService {
         }
     }
 
+    @Cacheable(value = "docStatus", key = "#userId", unless = "#result == 'INVALID_USER'")
     public String getStatus(String userId) {
 
         System.out.println("🔍 Checking document for user: " + userId);
@@ -107,6 +112,7 @@ public class DocumentService {
         return repository.findAll();
     }
     
+    @CacheEvict(value = "docStatus", key = "#userId")
     public String verifyDocument(String userId) {
 
         Optional<Document> docOpt = repository.findByUserId(userId);
@@ -123,6 +129,7 @@ public class DocumentService {
         return "DOCUMENT_VERIFIED";
     }
     
+    @CacheEvict(value = "docStatus", key = "#userId")
     public String rejectDocument(String userId) {
 
         Optional<Document> docOpt = repository.findByUserId(userId);

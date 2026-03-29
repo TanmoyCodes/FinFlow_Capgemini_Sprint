@@ -1,5 +1,6 @@
 package com.finflow.demo.util;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
@@ -13,12 +14,17 @@ import javax.crypto.SecretKey;
 @Component
 public class JwtUtil {
 
-	
-    private final String SECRET = "mysecretkeymysecretkeymysecretkey"; // SAME as auth service
+    @Value("${jwt.secret}")
+    private String secret;
+
+    private SecretKey getKey() {
+        return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
+    }
 
     public Claims validateToken(String token) {
-        return Jwts.parser()
-                .setSigningKey(SECRET.getBytes())
+        return Jwts.parserBuilder()
+                .setSigningKey(getKey())
+                .build()
                 .parseClaimsJws(token)
                 .getBody();
     }

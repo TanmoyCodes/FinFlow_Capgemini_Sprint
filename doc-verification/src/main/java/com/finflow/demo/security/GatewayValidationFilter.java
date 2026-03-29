@@ -5,6 +5,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -14,7 +15,8 @@ import java.util.Collections;
 @Component
 public class GatewayValidationFilter extends OncePerRequestFilter {
 
-    private static final String SECRET = "my-secret-key";
+    @Value("${gateway.secret}")
+    private String gatewaySecret;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -31,9 +33,6 @@ public class GatewayValidationFilter extends OncePerRequestFilter {
         // =========================
         // ✅ BYPASS FOR SWAGGER + UPLOAD
         // =========================
-     // =========================
-     // ✅ BYPASS FOR SWAGGER + UPLOAD
-     // =========================
      if (uri.contains("/v3/api-docs") ||
          uri.contains("/swagger-ui") ||
          uri.contains("/swagger-resources") ||
@@ -54,14 +53,14 @@ public class GatewayValidationFilter extends OncePerRequestFilter {
                         System.out.println(header + ": " + request.getHeader(header))
                 );
 
-        String gatewaySecret = request.getHeader("X-Gateway-Secret");
+        String secret = request.getHeader("X-Gateway-Secret");
 
-        System.out.println("🔑 Gateway Secret: " + gatewaySecret);
+        System.out.println("🔑 Gateway Secret: " + secret);
 
         // =========================
         // ✅ VALIDATE GATEWAY
         // =========================
-        if (SECRET.equals(gatewaySecret)) {
+        if (gatewaySecret.equals(secret)) {
             filterChain.doFilter(request, response);
             return;
         }
