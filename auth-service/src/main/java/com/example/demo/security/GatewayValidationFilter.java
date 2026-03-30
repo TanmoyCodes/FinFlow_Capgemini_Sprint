@@ -1,4 +1,4 @@
-package com.finflow.demo.security;
+package com.example.demo.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -26,22 +26,7 @@ public class GatewayValidationFilter extends OncePerRequestFilter {
 
         String uri = request.getRequestURI();
 
-        String forwardedPrefix = request.getHeader("X-Forwarded-Prefix");
-        System.out.println("🔁 Forwarded Prefix: " + forwardedPrefix);
-        System.out.println("📌 Incoming Request URI: " + uri);
-
-        // =========================
-        // 🔍 DEBUG HEADERS
-        // =========================
-        System.out.println("📦 All Headers:");
-        Collections.list(request.getHeaderNames())
-                .forEach(header ->
-                        System.out.println(header + ": " + request.getHeader(header))
-                );
-
         String secret = request.getHeader("X-Gateway-Secret");
-
-        System.out.println("🔑 Gateway Secret: " + secret);
 
         // =========================
         // ✅ VALIDATE GATEWAY
@@ -54,8 +39,6 @@ public class GatewayValidationFilter extends OncePerRequestFilter {
         // =========================
         // ❌ BLOCK REQUEST
         // =========================
-        System.out.println("❌ Access Denied - Invalid Gateway Secret");
-
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         response.getWriter().write("Access denied: Only gateway requests allowed");
     }

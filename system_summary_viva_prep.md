@@ -16,7 +16,7 @@ FinFlow is a microservices-based financial platform built using **Java 17, Sprin
 
 ```mermaid
 graph TD
-    User([User Request]) --> Gateway[API Gateway :8085]
+    User([User Request]) --> Gateway[API Gateway :8080]
     
     subgraph Infrastructure
         Eureka[Eureka Server :8761]
@@ -24,7 +24,7 @@ graph TD
     end
     
     subgraph Business-Services
-        Auth[Auth Service :8084]
+        Auth[Auth Service :8085]
         App[Application Service :8081]
         Doc[Doc-Verification :8082]
     end
@@ -56,13 +56,13 @@ graph TD
 
 ## 3. Module Breakdown
 
-### 🛰️ API Gateway (`:8085`)
+### 🛰️ API Gateway (`:8080`)
 - **Main Duty**: Entry point for all external requests.
 - **Routing**: Routes `/auth/**` to `auth-service`, `/application/**` and `/admin/**` to `application-service`, and `/documents/**` to `doc-verification`.
 - **Security**: Injects a global `X-Gateway-Secret` header to every request it proxies, ensuring only its traffic can reach downstream services.
 - **Swagger**: Aggregates API documentation only at this level (as per user request).
 
-### 🔐 Auth Service (`:8084`)
+### 🔐 Auth Service (`:8085`)
 - **Main Duty**: Manage users and security tokens.
 - **Tech**: JWT (jjwt 0.11.5), Spring Security, MySQL.
 - **Endpoints**: `/auth/signup`, `/auth/login`.

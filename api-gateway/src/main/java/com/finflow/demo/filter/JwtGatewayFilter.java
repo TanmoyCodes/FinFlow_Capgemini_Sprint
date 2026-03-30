@@ -28,12 +28,14 @@ public class JwtGatewayFilter implements GlobalFilter, Ordered {
 
         String path = exchange.getRequest().getURI().getPath();
 
-        // ✅ Allow auth endpoints
+        // ✅ Allow auth endpoints and Swagger/OpenAPI assets
         if (path.startsWith("/auth") ||
                 path.contains("/swagger-ui") ||
                 path.contains("/v3/api-docs") ||
                 path.contains("/swagger-resources") ||
-                path.contains("/webjars")) {
+                path.contains("/webjars") ||
+                path.contains("/openapi") ||
+                path.endsWith("/api-docs")) {
 
             System.out.println("Swagger/Auth bypass: " + path);
             return chain.filter(exchange);

@@ -20,3 +20,4 @@ echo Starting API Gateway...
 start "API Gateway" cmd /k "cd api-gateway && mvnw.cmd spring-boot:run > ..\gateway.log 2>&1"
 
 echo All services are booting up! Please wait 30 seconds for them to register with Eureka.
+

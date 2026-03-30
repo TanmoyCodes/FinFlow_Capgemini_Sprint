@@ -377,8 +377,19 @@ public class ApplicationService implements ApplicationServiceInterface {
 		long approved = repository.countByStatus(ApplicationStatus.APPROVED);
 		long rejected = repository.countByStatus(ApplicationStatus.REJECTED);
 		long pending = Math.max(0, totalApplications - (approved + rejected));
+		long docPending = repository.countByStatus(ApplicationStatus.DOCS_PENDING);
+		long docVerified = repository.countByStatus(ApplicationStatus.DOCS_VERIFIED);
 
-		return new AdminStatsDTO(0, totalApplications, approved, rejected, pending, 0, 0);
+		// Fetch total users from Auth Service
+		long totalUsers = 0;
+		try {
+			String token = (String) SecurityContextHolder.getContext().getAuthentication().getCredentials();
+			totalUsers = docClient.getUserCount(token);
+		} catch (Exception e) {
+			System.out.println("⚠️ Could not get auth token for stats: " + e.getMessage());
+		}
+
+		return new AdminStatsDTO(totalUsers, totalApplications, approved, rejected, pending, docPending, docVerified);
 	}
 
 	

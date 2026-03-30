@@ -30,4 +30,26 @@ public class DocClient {
 
         return response.getBody();
     }
+
+    public long getUserCount(String token) {
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("X-Gateway-Secret", "my-secret-key");
+            headers.set("Authorization", "Bearer " + token);
+
+            HttpEntity<?> entity = new HttpEntity<>(headers);
+
+            ResponseEntity<Long> response = restTemplate.exchange(
+                    "http://AUTH-SERVICE/auth/internal/user-count",
+                    HttpMethod.GET,
+                    entity,
+                    Long.class
+            );
+
+            return response.getBody() != null ? response.getBody() : 0;
+        } catch (Exception e) {
+            System.out.println("⚠️ Could not fetch user count from auth-service: " + e.getMessage());
+            return 0;
+        }
+    }
 }

@@ -1,0 +1,153 @@
+version: '3.8'
+
+services:
+  # =========================
+  # INFRASTRUCTURE
+  # =========================
+  mysql-db:
+    image: mysql:8.0
+    container_name: finflow-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-TanmoyPass4}
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+      - mysql_data:/var/lib/mysql
+    networks:
+      - finflow-net
+
+  redis-cache:
+    image: redis:alpine
+    container_name: finflow-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - finflow-net
+
+  rabbitmq-broker:
+    image: rabbitmq:3-management-alpine
+    container_name: finflow-rabbitmq
+    ports:
+      - "5672:5672"   # AMQP
+      - "15672:15672" # Management UI
+    networks:
+      - finflow-net
+
+  # =========================
+  # CORE SERVICES
+  # =========================
+  eureka-server:
+    build: ./eureka-server
+    container_name: finflow-eureka
+    ports:
+      - "8761:8761"
+    environment:
+      EUREKA_CLIENT_REGISTER_WITH_EUREKA: "false"
+      EUREKA_CLIENT_FETCH_REGISTRY: "false"
+    networks:
+      - finflow-net
+
+  config-server:
+    build: ./config-server
+    container_name: finflow-config
+    ports:
+      - "8888:8888"
+    depends_on:
+      - eureka-server
+    environment:
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      SPRING_CLOUD_CONFIG_SERVER_GIT_URI: ${CONFIG_GIT_URI:-https://github.com/TanmoyCodes/finflow-config}
+    networks:
+      - finflow-net
+
+  api-gateway:
+    build: ./api-gateway
+    container_name: finflow-gateway
+    ports:
+      - "8080:8080"
+    depends_on:
+      - eureka-server
+    environment:
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      EUREKA_INSTANCE_HOSTNAME: api-gateway
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "false"
+      JWT_SECRET: ${JWT_SECRET:-mysecretkeymysecretkeymysecretkey}
+      GATEWAY_SECRET: ${GATEWAY_SECRET:-my-secret-key}
+    networks:
+      - finflow-net
+
+  auth-service:
+    build: ./auth-service
+    container_name: finflow-auth
+    ports:
+      - "8085:8085"
+    depends_on:
+      - mysql-db
+      - eureka-server
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/finflow_auth_db
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-TanmoyPass4}
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      EUREKA_INSTANCE_HOSTNAME: auth-service
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "false"
+      GATEWAY_SECRET: ${GATEWAY_SECRET:-my-secret-key}
+      JWT_SECRET: ${JWT_SECRET:-mysecretkeymysecretkeymysecretkey}
+    networks:
+      - finflow-net
+
+  application-service:
+    build: ./application-service
+    container_name: finflow-application
+    ports:
+      - "8081:8081"
+    depends_on:
+      - mysql-db
+      - redis-cache
+      - rabbitmq-broker
+      - eureka-server
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/finflow_app_db
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-TanmoyPass4}
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      EUREKA_INSTANCE_HOSTNAME: application-service
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "false"
+      SPRING_DATA_REDIS_HOST: redis-cache
+      SPRING_RABBITMQ_HOST: rabbitmq-broker
+      GATEWAY_SECRET: ${GATEWAY_SECRET:-my-secret-key}
+      JWT_SECRET: ${JWT_SECRET:-mysecretkeymysecretkeymysecretkey}
+    networks:
+      - finflow-net
+
+  doc-verification:
+    build: ./doc-verification
+    container_name: finflow-doc
+    ports:
+      - "8082:8082"
+    depends_on:
+      - mysql-db
+      - redis-cache
+      - rabbitmq-broker
+      - eureka-server
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/finflow_doc_db
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:-TanmoyPass4}
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka-server:8761/eureka/
+      EUREKA_INSTANCE_HOSTNAME: doc-verification
+      EUREKA_INSTANCE_PREFER_IP_ADDRESS: "false"
+      SPRING_DATA_REDIS_HOST: redis-cache
+      SPRING_RABBITMQ_HOST: rabbitmq-broker
+      GATEWAY_SECRET: ${GATEWAY_SECRET:-my-secret-key}
+    networks:
+      - finflow-net
+
+networks:
+  finflow-net:
+    driver: bridge
+
+volumes:
+  mysql_data:

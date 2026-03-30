@@ -63,4 +63,8 @@ public class AuthService {
 
         return new AuthResponse(token, user.getRole().name());
     }
+
+    public long getCount() {
+        return userRepository.count();
+    }
 }

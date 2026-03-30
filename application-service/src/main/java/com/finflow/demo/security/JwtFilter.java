@@ -35,19 +35,7 @@ public class JwtFilter extends OncePerRequestFilter {
 
         System.out.println("➡️ Incoming Request: " + path);
 
-        // ✅ Skip auth endpoints
-        if (path.startsWith("/auth") ||
-        	    path.startsWith("/application/v3/api-docs") ||
-        	    path.contains("/v3/api-docs") ||
-        	    path.contains("/swagger-ui") ||
-        	    path.contains("/swagger-resources") ||
-        	    path.contains("/webjars")) {
-
-        	    System.out.println("✅ Swagger/Auth bypass: " + path);
-        	    filterChain.doFilter(request, response);
-        	    return;
-        	}
-        // 🔐 Gateway check
+        // 🔐 Gateway check (Mandatory for all through gateway)
         String secret = request.getHeader("X-Gateway-Secret");
 
         if (secret == null || !gatewaySecret.equals(secret)) {
@@ -57,6 +45,19 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
         System.out.println("✅ Gateway Secret Passed");
+
+        // ✅ Skip auth/swagger for JWT check
+        if (path.startsWith("/auth") ||
+                path.startsWith("/application/v3/api-docs") ||
+                path.contains("/v3/api-docs") ||
+                path.contains("/swagger-ui") ||
+                path.contains("/swagger-resources") ||
+                path.contains("/webjars")) {
+
+            System.out.println("✅ Swagger/Auth bypass for JWT: " + path);
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         // 🔑 JWT check
         String authHeader = request.getHeader("Authorization");
